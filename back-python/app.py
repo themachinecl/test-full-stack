@@ -64,7 +64,7 @@ def get_orders():
         total_items_query = total_items_query.filter(Order.order_name.ilike(f"%{order_name}%"))
     total_items = total_items_query.scalar()
 
-    total_pages = (total_items + per_page - 1) 
+    total_pages = (total_items + per_page - 1) // per_page 
 
     #Result
     orders = query.all()
