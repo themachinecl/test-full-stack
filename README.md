@@ -2,7 +2,7 @@
 
 JUAN PAULO RUBILAR FONTT
 
-#1  
+#1 schema: default :public_test_full_stack  
 python load_csv_to_postgresql.py
 
 #2  

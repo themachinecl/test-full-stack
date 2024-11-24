@@ -24,23 +24,39 @@ SET default_table_access_method = heap;
 
 --
 -- TOC entry 223 (class 1259 OID 16429)
--- Name: customer_companies; Type: TABLE; Schema: public2; Owner: postgres
+-- Name: customer_companies; Type: TABLE; Schema: setup! ; Owner: postgres
 --
 
-CREATE TABLE public2.customer_companies (
+-- Parametrize schema name
+-- Parametrize schema name
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM information_schema.schemata
+        WHERE schema_name = '{{schema}}'
+    ) THEN
+        EXECUTE 'CREATE SCHEMA {{schema}}';
+    END IF;
+END $$;
+
+-- Set search_path to the desired schema
+SET search_path TO {{schema}};
+
+CREATE TABLE {{schema}}.customer_companies (
     company_name character varying NOT NULL,
     company_id character varying NOT NULL
 );
 
 
-ALTER TABLE public2.customer_companies OWNER TO postgres;
+ALTER TABLE {{schema}}.customer_companies OWNER TO postgres;
 
 --
 -- TOC entry 222 (class 1259 OID 16421)
--- Name: customers; Type: TABLE; Schema: public2; Owner: postgres
+-- Name: customers; Type: TABLE; Schema: {{schema}}; Owner: postgres
 --
 
-CREATE TABLE public2.customers (
+CREATE TABLE {{schema}}.customers (
     login character varying(10) NOT NULL,
     password character varying(20) NOT NULL,
     name character varying(20),
@@ -50,28 +66,28 @@ CREATE TABLE public2.customers (
 );
 
 
-ALTER TABLE public2.customers OWNER TO postgres;
+ALTER TABLE {{schema}}.customers OWNER TO postgres;
 
 --
 -- TOC entry 221 (class 1259 OID 16413)
--- Name: deliveries; Type: TABLE; Schema: public2; Owner: postgres
+-- Name: deliveries; Type: TABLE; Schema: {{schema}}; Owner: postgres
 --
 
-CREATE TABLE public2.deliveries (
+CREATE TABLE {{schema}}.deliveries (
     id integer NOT NULL,
     order_item_id numeric(20,0) NOT NULL,
     delivered_quantity numeric(20,0) NOT NULL
 );
 
 
-ALTER TABLE public2.deliveries OWNER TO postgres;
+ALTER TABLE {{schema}}.deliveries OWNER TO postgres;
 
 --
 -- TOC entry 220 (class 1259 OID 16412)
--- Name: deliveries_id_seq; Type: SEQUENCE; Schema: public2; Owner: postgres
+-- Name: deliveries_id_seq; Type: SEQUENCE; Schema: {{schema}}; Owner: postgres
 --
 
-CREATE SEQUENCE public2.deliveries_id_seq
+CREATE SEQUENCE {{schema}}.deliveries_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -80,23 +96,23 @@ CREATE SEQUENCE public2.deliveries_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public2.deliveries_id_seq OWNER TO postgres;
+ALTER SEQUENCE {{schema}}.deliveries_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 4809 (class 0 OID 0)
 -- Dependencies: 220
--- Name: deliveries_id_seq; Type: SEQUENCE OWNED BY; Schema: public2; Owner: postgres
+-- Name: deliveries_id_seq; Type: SEQUENCE OWNED BY; Schema: {{schema}}; Owner: postgres
 --
 
-ALTER SEQUENCE public2.deliveries_id_seq OWNED BY public2.deliveries.id;
+ALTER SEQUENCE {{schema}}.deliveries_id_seq OWNED BY {{schema}}.deliveries.id;
 
 
 --
 -- TOC entry 219 (class 1259 OID 16406)
--- Name: order_items; Type: TABLE; Schema: public2; Owner: postgres
+-- Name: order_items; Type: TABLE; Schema: {{schema}}; Owner: postgres
 --
 
-CREATE TABLE public2.order_items (
+CREATE TABLE {{schema}}.order_items (
     id integer NOT NULL,
     order_id numeric(20,0) NOT NULL,
     price_per_unit double precision,
@@ -105,14 +121,14 @@ CREATE TABLE public2.order_items (
 );
 
 
-ALTER TABLE public2.order_items OWNER TO postgres;
+ALTER TABLE {{schema}}.order_items OWNER TO postgres;
 
 --
 -- TOC entry 218 (class 1259 OID 16405)
--- Name: order_id_id_seq; Type: SEQUENCE; Schema: public2; Owner: postgres
+-- Name: order_id_id_seq; Type: SEQUENCE; Schema: {{schema}}; Owner: postgres
 --
 
-CREATE SEQUENCE public2.order_id_id_seq
+CREATE SEQUENCE {{schema}}.order_id_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -121,23 +137,23 @@ CREATE SEQUENCE public2.order_id_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public2.order_id_id_seq OWNER TO postgres;
+ALTER SEQUENCE {{schema}}.order_id_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 4810 (class 0 OID 0)
 -- Dependencies: 218
--- Name: order_id_id_seq; Type: SEQUENCE OWNED BY; Schema: public2; Owner: postgres
+-- Name: order_id_id_seq; Type: SEQUENCE OWNED BY; Schema: {{schema}}; Owner: postgres
 --
 
-ALTER SEQUENCE public2.order_id_id_seq OWNED BY public2.order_items.id;
+ALTER SEQUENCE {{schema}}.order_id_id_seq OWNED BY {{schema}}.order_items.id;
 
 
 --
 -- TOC entry 217 (class 1259 OID 16399)
--- Name: orders; Type: TABLE; Schema: public2; Owner: postgres
+-- Name: orders; Type: TABLE; Schema: {{schema}}; Owner: postgres
 --
 
-CREATE TABLE public2.orders (
+CREATE TABLE {{schema}}.orders (
     id integer NOT NULL,
     created_at timestamp with time zone NOT NULL,
     order_name character varying(50) NOT NULL,
@@ -145,14 +161,14 @@ CREATE TABLE public2.orders (
 );
 
 
-ALTER TABLE public2.orders OWNER TO postgres;
+ALTER TABLE {{schema}}.orders OWNER TO postgres;
 
 --
 -- TOC entry 216 (class 1259 OID 16398)
--- Name: orders_id_seq; Type: SEQUENCE; Schema: public2; Owner: postgres
+-- Name: orders_id_seq; Type: SEQUENCE; Schema: {{schema}}; Owner: postgres
 --
 
-CREATE SEQUENCE public2.orders_id_seq
+CREATE SEQUENCE {{schema}}.orders_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -161,83 +177,83 @@ CREATE SEQUENCE public2.orders_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public2.orders_id_seq OWNER TO postgres;
+ALTER SEQUENCE {{schema}}.orders_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 4811 (class 0 OID 0)
 -- Dependencies: 216
--- Name: orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public2; Owner: postgres
+-- Name: orders_id_seq; Type: SEQUENCE OWNED BY; Schema: {{schema}}; Owner: postgres
 --
 
-ALTER SEQUENCE public2.orders_id_seq OWNED BY public2.orders.id;
+ALTER SEQUENCE {{schema}}.orders_id_seq OWNED BY {{schema}}.orders.id;
 
 
 --
 -- TOC entry 4650 (class 2604 OID 16416)
--- Name: deliveries id; Type: DEFAULT; Schema: public2; Owner: postgres
+-- Name: deliveries id; Type: DEFAULT; Schema: {{schema}}; Owner: postgres
 --
 
-ALTER TABLE ONLY public2.deliveries ALTER COLUMN id SET DEFAULT nextval('public2.deliveries_id_seq'::regclass);
+ALTER TABLE ONLY {{schema}}.deliveries ALTER COLUMN id SET DEFAULT nextval('{{schema}}.deliveries_id_seq'::regclass);
 
 
 --
 -- TOC entry 4649 (class 2604 OID 16409)
--- Name: order_items id; Type: DEFAULT; Schema: public2; Owner: postgres
+-- Name: order_items id; Type: DEFAULT; Schema: {{schema}}; Owner: postgres
 --
 
-ALTER TABLE ONLY public2.order_items ALTER COLUMN id SET DEFAULT nextval('public2.order_id_id_seq'::regclass);
+ALTER TABLE ONLY {{schema}}.order_items ALTER COLUMN id SET DEFAULT nextval('{{schema}}.order_id_id_seq'::regclass);
 
 
 --
 -- TOC entry 4648 (class 2604 OID 16402)
--- Name: orders id; Type: DEFAULT; Schema: public2; Owner: postgres
+-- Name: orders id; Type: DEFAULT; Schema: {{schema}}; Owner: postgres
 --
 
-ALTER TABLE ONLY public2.orders ALTER COLUMN id SET DEFAULT nextval('public2.orders_id_seq'::regclass);
+ALTER TABLE ONLY {{schema}}.orders ALTER COLUMN id SET DEFAULT nextval('{{schema}}.orders_id_seq'::regclass);
 
 
 --
 -- TOC entry 4660 (class 2606 OID 16452)
--- Name: customer_companies customer_companies_pkey; Type: CONSTRAINT; Schema: public2; Owner: postgres
+-- Name: customer_companies customer_companies_pkey; Type: CONSTRAINT; Schema: {{schema}}; Owner: postgres
 --
 
-ALTER TABLE ONLY public2.customer_companies
+ALTER TABLE ONLY {{schema}}.customer_companies
     ADD CONSTRAINT customer_companies_pkey PRIMARY KEY (company_id);
 
 
 --
 -- TOC entry 4658 (class 2606 OID 16450)
--- Name: customers customers_pkey; Type: CONSTRAINT; Schema: public2; Owner: postgres
+-- Name: customers customers_pkey; Type: CONSTRAINT; Schema: {{schema}}; Owner: postgres
 --
 
-ALTER TABLE ONLY public2.customers
+ALTER TABLE ONLY {{schema}}.customers
     ADD CONSTRAINT customers_pkey PRIMARY KEY (user_id);
 
 
 --
 -- TOC entry 4656 (class 2606 OID 16420)
--- Name: deliveries deliveries_pkey; Type: CONSTRAINT; Schema: public2; Owner: postgres
+-- Name: deliveries deliveries_pkey; Type: CONSTRAINT; Schema: {{schema}}; Owner: postgres
 --
 
-ALTER TABLE ONLY public2.deliveries
+ALTER TABLE ONLY {{schema}}.deliveries
     ADD CONSTRAINT deliveries_pkey PRIMARY KEY (id);
 
 
 --
 -- TOC entry 4654 (class 2606 OID 16411)
--- Name: order_items order_id_pkey; Type: CONSTRAINT; Schema: public2; Owner: postgres
+-- Name: order_items order_id_pkey; Type: CONSTRAINT; Schema: {{schema}}; Owner: postgres
 --
 
-ALTER TABLE ONLY public2.order_items
+ALTER TABLE ONLY {{schema}}.order_items
     ADD CONSTRAINT order_id_pkey PRIMARY KEY (id);
 
 
 --
 -- TOC entry 4652 (class 2606 OID 16404)
--- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public2; Owner: postgres
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: {{schema}}; Owner: postgres
 --
 
-ALTER TABLE ONLY public2.orders
+ALTER TABLE ONLY {{schema}}.orders
     ADD CONSTRAINT orders_pkey PRIMARY KEY (id);
 
 
