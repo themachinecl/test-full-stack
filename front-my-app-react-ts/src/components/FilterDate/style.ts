@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-import "react-datepicker/dist/react-datepicker.css"; // Asegúrate de importar los estilos del DatePicker
-
+import "react-datepicker/dist/react-datepicker.css"; 
 export const Container = styled.div`
   padding: 1rem;
 `;
@@ -18,7 +17,7 @@ export const DatePickerContainer = styled.div`
   }
 
   .react-datepicker-wrapper {
-    width: auto; /* Asegura que el DatePicker se ajuste al contenido */
+    width: auto; 
   }
 
   .react-datepicker__input-container input {

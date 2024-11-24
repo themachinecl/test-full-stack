@@ -8,10 +8,10 @@ import { OrderContainer } from "./style";
 import { useOrders } from "../../hook/orderHook";
 
 const Orders: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState<string>(""); // Estado para el término de búsqueda
-  const [orderByTerm, setOrderByTerm] = useState<"asc" | "desc">("asc"); // Estado inicial
-  const [startDateTerm, setStartDateTerm] = useState(""); // Estado inicial
-  const [endDateTerm, setEndDateTerm] = useState(""); // Estado inicial
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [orderByTerm, setOrderByTerm] = useState<"asc" | "desc">("asc");
+  const [startDateTerm, setStartDateTerm] = useState("");
+  const [endDateTerm, setEndDateTerm] = useState("");
 
   const { ordersList, totalPages, page, setPage, loading, error } = useOrders(
     1,
@@ -23,7 +23,7 @@ const Orders: React.FC = () => {
     }
   );
 
-  if (loading) return <h1>...::: Loading :::...</h1>; // Mensaje más conciso
+  if (loading) return <h1>...::: Loading :::...</h1>;
   if (error) return <div>Error: {error}</div>;
 
   return (

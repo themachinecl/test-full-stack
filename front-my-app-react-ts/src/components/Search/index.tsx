@@ -3,7 +3,7 @@ import { SearchContainer } from "./style";
 
 interface Props {
   setPage: (page: number) => void;
-  setSearchTerm: (term: string) => void; // Función para actualizar el término de búsqueda
+  setSearchTerm: (term: string) => void;
 }
 
 const Search: React.FC<Props> = ({ setPage, setSearchTerm }) => {
@@ -16,7 +16,7 @@ const Search: React.FC<Props> = ({ setPage, setSearchTerm }) => {
 
   const handleSearch = () => {
     setPage(1);
-    setSearchTerm(localSearch); // Pasar el término al componente principal
+    setSearchTerm(localSearch);
   };
 
   return (

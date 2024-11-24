@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 
 interface UseOrdersParams {
-  page: number; // Obligatorio
-  order_by?: "asc" | "desc"; // Opcional
-  order_name?: string; // Opcional
-  start_date?: string; // Opcional (Formato: YYYY-MM-DD)
-  end_date?: string; // Opcional (Formato: YYYY-MM-DD)
+  page: number;
+  order_by?: "asc" | "desc";
+  order_name?: string;
+  start_date?: string;
+  end_date?: string;
 }
 
 interface UseOrdersReturn {
-  ordersList: any[]; // Cambia `any` por el tipo específico si lo conoces
+  ordersList: any[];
   totalPages: number;
   page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>; // Correcto tipo de setPage
+  setPage: React.Dispatch<React.SetStateAction<number>>;
   loading: boolean;
   error: string | null;
 }
@@ -21,19 +21,18 @@ export const useOrders = (
   initialPage: number,
   { order_by, order_name, start_date, end_date }: Partial<UseOrdersParams> = {}
 ): UseOrdersReturn => {
-  const [ordersList, setOrdersList] = useState<any[]>([]); // Lista de órdenes
-  const [loading, setLoading] = useState<boolean>(true); // Estado de carga
-  const [error, setError] = useState<string | null>(null); // Estado de error
-  const [totalPages, setTotalPages] = useState<number>(1); // Total de páginas
-  const [page, setPage] = useState<number>(initialPage); // Página actual
+  const [ordersList, setOrdersList] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [page, setPage] = useState<number>(initialPage);
 
   useEffect(() => {
     async function getListOrder() {
       try {
         setLoading(true);
-        setError(null); // Reiniciar error antes de una nueva solicitud
+        setError(null);
 
-        // Construir la URL con parámetros opcionales
         const params = new URLSearchParams({ page: page.toString() });
         if (order_by) params.append("order_by", order_by);
         if (order_name) params.append("order_name", order_name);
@@ -47,17 +46,16 @@ export const useOrders = (
           throw new Error("Error Server");
         }
         const data = await response.json();
-        setOrdersList(data?.orders || []); // Actualiza la lista de órdenes
-        setTotalPages(data?.total_pages || 1); // Actualiza el total de páginas
+        setOrdersList(data?.orders || []);
+        setTotalPages(data?.total_pages || 1);
       } catch (err: any) {
         setError(err.message || "An error occurred");
       } finally {
-        setLoading(false); // Finaliza la carga
+        setLoading(false);
       }
     }
-
     getListOrder();
-  }, [page, order_by, order_name, start_date, end_date]); // El efecto se dispara cuando cambia cualquier parámetro
+  }, [page, order_by, order_name, start_date, end_date]);
 
   return { ordersList, totalPages, page, setPage, loading, error };
 };

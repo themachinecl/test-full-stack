@@ -13,16 +13,16 @@ interface Order {
 interface Props {
   orders: Order[];
   setPage: (page: number) => void;
-  setOrderByTerm?: Dispatch<SetStateAction<"asc" | "desc">>; // Ajuste aquí
+  setOrderByTerm?: Dispatch<SetStateAction<"asc" | "desc">>;
 }
 
 const OrderTable: React.FC<Props> = ({ orders, setPage, setOrderByTerm }) => {
-  const [orderBy, setOrderBy] = useState<"asc" | "desc">("asc"); // Estado inicial
+  const [orderBy, setOrderBy] = useState<"asc" | "desc">("asc");
 
   const toggleOrder = () => {
-    setOrderBy((prev) => (prev === "asc" ? "desc" : "asc")); // Alternar entre asc y desc
+    setOrderBy((prev) => (prev === "asc" ? "desc" : "asc"));
     if (setOrderByTerm) {
-      setOrderByTerm(orderBy); // Solo llamar si está definido
+      setOrderByTerm(orderBy);
     }
     setPage(1);
   };

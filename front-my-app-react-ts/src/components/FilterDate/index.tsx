@@ -16,17 +16,17 @@ const FilterDate: React.FC<Props> = ({
   const [startDate, setStartDate] = useState<Date | null>(
     new Date("2020-01-03")
   ); // Permitir que sea Date o null
-  const [endDate, setEndDate] = useState<Date | null>(new Date("2020-01-03")); // Permitir que sea Date o null
+  const [endDate, setEndDate] = useState<Date | null>(new Date("2020-01-03"));
 
   const handleSearch = () => {
     const formatDate = (date: Date) => date.toISOString().split("T")[0];
 
     if (startDate && setStartDateTerm) {
-      setStartDateTerm(formatDate(startDate)); // Solo llamar si startDate no es null
+      setStartDateTerm(formatDate(startDate));
     }
 
     if (endDate && setEndDateTerm) {
-      setEndDateTerm(formatDate(endDate)); // Solo llamar si endDate no es null
+      setEndDateTerm(formatDate(endDate));
     }
 
     setPage(1);

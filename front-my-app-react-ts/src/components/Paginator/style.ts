@@ -6,15 +6,15 @@ export const PaginatorContainer = styled.div`
   align-items: center;
   margin-top: 1rem;
   padding: 0.5rem;
-  background-color: #f8f9fa; /* Color de fondo suave */
-  border: 1px solid #dee2e6; /* Borde gris claro */
+  background-color: #f8f9fa; 
+  border: 1px solid #dee2e6; 
   border-radius: 5px;
 `;
 
 export const PageInfo = styled.span`
   font-size: 1rem;
   font-weight: 500;
-  color: #495057; /* Gris oscuro */
+  color: #495057; 
 `;
 
 export const PaginatorButton = styled.button`
@@ -22,18 +22,18 @@ export const PaginatorButton = styled.button`
   font-size: 0.9rem;
   font-weight: 600;
   color: #fff;
-  background-color: #007bff; /* Azul Bootstrap */
+  background-color: #007bff; 
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #0056b3; /* Azul oscuro al pasar el mouse */
+    background-color: #0056b3; 
   }
 
   &:disabled {
-    background-color: #6c757d; /* Gris cuando está deshabilitado */
+    background-color: #6c757d; 
     cursor: not-allowed;
   }
 `;
